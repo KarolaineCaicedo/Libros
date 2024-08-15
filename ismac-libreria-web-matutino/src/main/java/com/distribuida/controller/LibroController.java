@@ -43,7 +43,7 @@ public class LibroController {
 	
 	@GetMapping("/findOne")
 	private String findOne(@RequestParam ("idLibro") @Nullable Integer idLibro
-			              ,@RequestParam ("option") @Nullable Integer option
+			              ,@RequestParam ("opcion") @Nullable Integer option
 			              ,ModelMap modelMap
 			
 			
@@ -57,7 +57,7 @@ public class LibroController {
 		//modelMap.addAttribute("autores", autorDAO.findAll());
 		modelMap.addAttribute("categorias", categoriaDAO.findAll());
 		
-			if(option == 1) return "libros-add";
+			if(option == 1) return "add-libros";
 			else return "libros-del";
 	}
 	
@@ -71,7 +71,7 @@ public class LibroController {
 			       ,@RequestParam ("fechaPublicacion") @Nullable Date fechaPublicacion
 			       ,@RequestParam ("descripcion") @Nullable String descripcion
 			       ,@RequestParam ("tipoPasta") @Nullable String tipoPasta
-			       ,@RequestParam ("isbn") @Nullable String isbn
+			       ,@RequestParam ("ISBN") @Nullable String ISBN
 			       ,@RequestParam ("numEjemplares") @Nullable Integer numEjemplares
 			       ,@RequestParam ("portada") @Nullable String portada
 			       ,@RequestParam ("presentacion") @Nullable String presentacion
@@ -82,30 +82,30 @@ public class LibroController {
 			) {
 		
 		if (idLibro == null) {
-			Libro libro = new Libro(0,titulo,editorial,numPaginas,edicion,idioma,fechaPublicacion,descripcion,tipoPasta,isbn,numEjemplares,portada,presentacion,precio);
+			Libro libro = new Libro(0,titulo,editorial,numPaginas,edicion,idioma,fechaPublicacion,descripcion,tipoPasta,ISBN,numEjemplares,portada,presentacion,precio);
 			libro.setCategoria(categoriaDAO.findOne(id_categoria));
-			//libro.setAutor(autorDAO.findOne(id_autor));
+			libro.setAutor(autorDAO.findOne(id_autor));
 			
 			libroDAO.add(libro);	
 			
 		}else {
 			
-			Libro libro = new Libro(idLibro,titulo,editorial,numPaginas,edicion,idioma,fechaPublicacion,descripcion,tipoPasta,isbn,numEjemplares,portada,presentacion,precio);
+			Libro libro = new Libro(idLibro,titulo,editorial,numPaginas,edicion,idioma,fechaPublicacion,descripcion,tipoPasta,ISBN,numEjemplares,portada,presentacion,precio);
 			libro.setCategoria(categoriaDAO.findOne(id_categoria));
-			//libro.setAutor(autorDAO.findOne(id_autor));
+			libro.setAutor(autorDAO.findOne(id_autor));
 			
 			libroDAO.up(libro);
 			
 		}
 		
-		return "redirect:/libros/libros-listar";
+		return "redirect:/libros/findAll";
 		
 	}
 	
 	@GetMapping ("/del")
 	public String del(@RequestParam("idLibro") @Nullable Integer idLibro) {
 		 libroDAO.del(idLibro);
-		return "redirect:/libros/libros-listar";
+		return "redirect:/libros/findAll";
 	}
 
 }
