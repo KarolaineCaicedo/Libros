@@ -15,12 +15,17 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+
+/**
+ * 
+ */
 @Component
 @Entity
-@Table(name="libro")
+@Table(name = "libro")
 public class Libro {
+
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_libro")
 	private int idLibro;
 	@Column(name = "titulo")
@@ -28,7 +33,7 @@ public class Libro {
 	@Column(name = "editorial")
 	private String editorial;
 	@Column(name = "num_paginas")
-	private int numPaginas;
+	private int numPaginas; 
 	@Column(name = "edicion")
 	private String edicion;
 	@Column(name = "idioma")
@@ -50,23 +55,37 @@ public class Libro {
 	private String presentacion;
 	@Column(name = "precio")
 	private double precio;
-	//private int idCategoria;
-	//private int idAutor;
-	@JoinColumn(name="id_categoria")
-	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-	private Categoria categoria;
 	
-	@JoinColumn(name="id_autor")
-	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-	private Autor autor;
+	@JoinColumn(name = "id_categoria")
+	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	private Categoria categoria; //private int idCategoria;
+	@JoinColumn(name = "id_autor")
+	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	private Autor autor; //private int idAutor;
 	
-	public Libro () {}
-	//Contructor
+	public Libro() {}
+
 	
+	/**
+	 * @param idLibro
+	 * @param titulo
+	 * @param editorial
+	 * @param numPaginas
+	 * @param edicion
+	 * @param idioma
+	 * @param fechaPublicacion
+	 * @param descripcion
+	 * @param tipoPasta
+	 * @param iSBN
+	 * @param numEjemplares
+	 * @param portada
+	 * @param presentacion
+	 * @param precio
+	 */
 	public Libro(int idLibro, String titulo, String editorial, int numPaginas, String edicion, String idioma,
-			Date fechaPublicacion, String descripcion, String tipoPasta, String ISBN, int numEjemplares, String portada,
+			Date fechaPublicacion, String descripcion, String tipoPasta, String iSBN, int numEjemplares, String portada,
 			String presentacion, double precio) {
-		
+	
 		this.idLibro = idLibro;
 		this.titulo = titulo;
 		this.editorial = editorial;
@@ -76,13 +95,13 @@ public class Libro {
 		this.fechaPublicacion = fechaPublicacion;
 		this.descripcion = descripcion;
 		this.tipoPasta = tipoPasta;
-		this.ISBN = ISBN;
+		this.ISBN = iSBN;
 		this.numEjemplares = numEjemplares;
 		this.portada = portada;
 		this.presentacion = presentacion;
 		this.precio = precio;
-		//this.idCategoria = idCategoria;
-		//this.idAutor = idAutor;
+		//this.categoria = categoria;
+		//this.autor = autor;
 	}
 
 	public int getIdLibro() {
@@ -161,8 +180,8 @@ public class Libro {
 		return ISBN;
 	}
 
-	public void setISBN(String ISBN) {
-		this.ISBN = ISBN;
+	public void setISBN(String iSBN) {
+		ISBN = iSBN;
 	}
 
 	public int getNumEjemplares() {
@@ -197,7 +216,6 @@ public class Libro {
 		this.precio = precio;
 	}
 
-
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -213,6 +231,7 @@ public class Libro {
 	public void setAutor(Autor autor) {
 		this.autor = autor;
 	}
+
 
 	@Override
 	public String toString() {
